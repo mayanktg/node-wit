@@ -100,16 +100,15 @@ const actions = {
 
     }
 
-    if (context.loc && context.search) {
+    if (context.search) {
       var api = 'https://www.urbanclap.com/api/v1/customercategories/search/category/' + city + '/' + context.search;
-      request(api, function (error, response, body) {
+      request(api, function(error, response, body) {
         if (!error && response.statusCode == 200) {
           var data = JSON.parse(body).success.data;
           const length = data.length;
-          context.result = {};
+          context.result = '';
           for (var i = 0; i < length; i++) {
-            var key = i.toString();
-            context.result[key] = 'Get ' + data[i].display_name + ' on Urbanclap. Click here: https://www.urbanclap.com/request/' + data[i].key_name;
+            context.result += 'Get ' + data[i].display_name + ' on Urbanclap. Click here: https://www.urbanclap.com/request/' + data[i].key_name + '\n\n';
           }
           cb(context);
         }
